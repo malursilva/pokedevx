@@ -1,4 +1,3 @@
 package com.github.malursilva.pokedexapp.shared.model
 
-class APIResult {
-}
+class APIResult (val results: List<Pokemon>)

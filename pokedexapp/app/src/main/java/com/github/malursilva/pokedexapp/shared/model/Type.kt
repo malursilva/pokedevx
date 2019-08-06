@@ -1,4 +1,5 @@
 package com.github.malursilva.pokedexapp.shared.model
 
-class Type {
-}
+import java.io.Serializable
+
+class Type (val name: String) : Serializable

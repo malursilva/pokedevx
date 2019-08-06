@@ -5,17 +5,16 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#00FF00"
->
+        android:background="@color/colorMainBackground">
 
-    <!--<androidx.recyclerview.widget.RecyclerView-->
-            <!--android:id="@+id/pokemon_list_recycler_view"-->
-            <!--app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="0dp"-->
-            <!--app:layout_constraintStart_toStartOf="parent"-->
-            <!--app:layout_constraintEnd_toEndOf="parent"-->
-            <!--app:layout_constraintTop_toTopOf="parent"-->
-    <!--/>-->
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/pokemon_favorite_list_recycler_view"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+    />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

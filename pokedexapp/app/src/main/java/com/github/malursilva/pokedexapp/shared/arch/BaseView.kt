@@ -1,4 +1,5 @@
 package com.github.malursilva.pokedexapp.shared.arch
 
-interface BaseView {
+interface BaseView<T> {
+    var presenter: T
 }
