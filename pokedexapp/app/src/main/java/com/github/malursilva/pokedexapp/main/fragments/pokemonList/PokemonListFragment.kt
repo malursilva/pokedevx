@@ -2,6 +2,7 @@ package com.github.malursilva.pokedexapp.main.fragments.pokemonList
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment
 import com.github.malursilva.pokedexapp.R
 import com.github.malursilva.pokedexapp.main.adapter.RecyclerAdapter
 import com.github.malursilva.pokedexapp.main.pokemonDetails.PokemonDetailsActivity
+import com.github.malursilva.pokedexapp.shared.events.GlobalBus
 import com.github.malursilva.pokedexapp.shared.model.Pokemon
 import kotlinx.android.synthetic.main.fragment_pokemon_list.view.*
 
@@ -31,6 +33,10 @@ class PokemonListFragment : Fragment(), PokemonListContract.View {
         adapter.onItemClick = { pokemon ->
             launchPokemonDetailsScreen(pokemon.name)
         }
+        adapter.onFavoriteItemClick = { pokemon ->
+            Log.d("TAG", "Selecionou o " + pokemon.name)
+            presenter.onFavoriteOptionSelected(pokemon)
+        }
         view!!.pokemon_list_recycler_view.adapter = adapter
     }
 
@@ -49,5 +55,10 @@ class PokemonListFragment : Fragment(), PokemonListContract.View {
         val intent = Intent(context, PokemonDetailsActivity::class.java)
         intent.putExtra("pokemon", pokemonName)
         startActivity(intent)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        GlobalBus.getBus().unregister(this)
     }
 }

@@ -26,10 +26,10 @@ class PokemonDetailsActivity : AppCompatActivity(), PokemonDetailsContract.View 
     override fun showDetailsInfo(pokemon: Pokemon) {
         Picasso.get().load(pokemon.sprites?.frontDefault).into(pokemon_details_image)
         pokemon_details_name.text = pokemon.name.capitalize()
-        pokemon_details_number.text = pokemon.id.toString()
-       // pokemon_details_type.text = pokemon.types.toString()
+        pokemon_details_number.text = resources.getString(R.string.pokemon_number_pattern, pokemon.id)
+        pokemon_details_type.text = pokemon.showAllTypes()
         pokemon_details_experience.text = pokemon.experience.toString()
-        pokemon_details_height.text = pokemon.height.toString() + " m"
+        pokemon_details_height.text = resources.getString(R.string.pokemon_height_pattern, pokemon.height)
         pokemon_details_rarity.text = pokemon.rarity.toString()
     }
 

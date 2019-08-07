@@ -13,5 +13,6 @@ interface PokemonListContract {
     }
     interface Presenter {
         fun initialize()
+        fun onFavoriteOptionSelected(pokemon: Pokemon)
     }
 }
