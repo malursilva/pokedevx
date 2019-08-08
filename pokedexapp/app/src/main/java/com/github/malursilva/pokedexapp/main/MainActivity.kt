@@ -8,18 +8,17 @@ import com.github.malursilva.pokedexapp.main.fragments.pokemonFavoriteList.Pokem
 import com.github.malursilva.pokedexapp.main.fragments.pokemonList.PokemonListFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
-
-    private lateinit var presenter: MainPresenter
+class MainActivity : AppCompatActivity(), MainContract.View {
+    override lateinit var presenter: MainContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setupView()
-        presenter = MainPresenter()
+        presenter = MainPresenter(this)
     }
 
-    fun setupView() {
+    override fun setupView() {
         main_toolbar.apply {
             setSupportActionBar(this)
             setNavigationOnClickListener {
@@ -30,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         setUpBottomNavigation()
     }
 
-    fun setUpBottomNavigation() {
+    override fun setUpBottomNavigation() {
         val fragmentAdapter = ViewPagerAdapter(supportFragmentManager).apply {
             addFragment(PokemonListFragment())
             addFragment(PokemonFavoriteListFragment())

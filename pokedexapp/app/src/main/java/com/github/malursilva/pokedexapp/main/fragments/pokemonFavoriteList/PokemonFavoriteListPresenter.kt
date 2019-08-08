@@ -6,14 +6,9 @@ import com.github.malursilva.pokedexapp.shared.model.Pokemon
 class PokemonFavoriteListPresenter(private val view: PokemonFavoriteListContract.View) :
     PokemonFavoriteListContract.Presenter {
 
-//    private var pokemonBox: Box<PokemonDBModel>
     private lateinit var pokemons: ArrayList<Pokemon>
 
     init {
-//        pokemonBox = ObjectBox.boxStore.boxFor(PokemonDBModel::class.java)
-//        pokemonBox.put(PokemonDBModel(0, 25, "pikachu"))
-//        pokemonBox.put(PokemonDBModel(0, 151, "mew"))
-//        pokemonBox.removeAll()
     }
 
     override fun initialize() {
@@ -28,11 +23,4 @@ class PokemonFavoriteListPresenter(private val view: PokemonFavoriteListContract
 //        }
         view.updateAdapterList(pokemons)
     }
-
-//    @Subscribe
-//    override fun getPokemonAdded(presenterEventMessage: Events.ListPToFavoriteP) {
-//        val pokemon = presenterEventMessage.getMessage()
-//        pokemonBox.put(PokemonDBModel(0, pokemon.name))
-//    }
-
 }

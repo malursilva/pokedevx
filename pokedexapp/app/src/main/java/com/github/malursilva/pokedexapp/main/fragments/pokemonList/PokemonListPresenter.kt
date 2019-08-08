@@ -30,7 +30,6 @@ class PokemonListPresenter(private val view: PokemonListContract.View) : Pokemon
 
     override fun onFavoriteOptionSelected(pokemon: Pokemon) {
         pokemon.favorite = !(pokemon.favorite)
-//        val presenterEventsMessage = Events.ListPToFavoriteP(pokemon)
-//        GlobalBus.getBus().post(presenterEventsMessage)
+        //
     }
 }
