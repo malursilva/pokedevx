@@ -1,15 +1,18 @@
 package com.github.malursilva.pokedexapp.main
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.github.malursilva.pokedexapp.R
 import com.github.malursilva.pokedexapp.main.adapter.ViewPagerAdapter
 import com.github.malursilva.pokedexapp.main.fragments.pokemonFavoriteList.PokemonFavoriteListFragment
 import com.github.malursilva.pokedexapp.main.fragments.pokemonList.PokemonListFragment
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.view.*
 
 class MainActivity : AppCompatActivity(), MainContract.View {
     override lateinit var presenter: MainContract.Presenter
+    private var layoutOption: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +26,9 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             setSupportActionBar(this)
             setNavigationOnClickListener {
                 finish()
+            }
+            image_button_change_layout.setOnClickListener {
+                onLayoutChange(it)
             }
         }
         supportActionBar?.setDisplayShowTitleEnabled(false)
@@ -50,6 +56,17 @@ class MainActivity : AppCompatActivity(), MainContract.View {
                 }
                 else -> false
             }
+        }
+    }
+
+    override fun onLayoutChange(view: View) {
+        presenter.onLayoutChange(layoutOption)
+        if(layoutOption == 0) {
+            view.image_button_change_layout.setImageResource(R.drawable.ic_view_list)
+            layoutOption = 1
+        } else {
+            view.image_button_change_layout.setImageResource(R.drawable.ic_view_grid)
+            layoutOption = 0
         }
     }
 }

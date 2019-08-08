@@ -9,11 +9,14 @@ interface PokemonFavoriteListContract {
         fun showFavoritePokemons(favoriteList: List<Pokemon>)
         fun launchPokemonDetailsScreen(pokemonName: String)
         fun updateAdapterList(favoriteList: List<Pokemon>)
+        fun changeLayoutManager(layoutOption: Int)
     }
 
     interface Presenter {
         fun initialize()
         fun update()
-//        fun getPokemonAdded(presenterEventMessage: Events.ListPToFavoriteP)
+        fun onFavoriteOptionSelected(pokemon: Pokemon)
+        fun addPokemon(pokemon: Pokemon)
+        fun removePokemon(pokemon: Pokemon)
     }
 }

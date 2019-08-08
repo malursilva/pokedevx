@@ -24,7 +24,8 @@
                 android:background="@android:color/holo_orange_light"
                 android:layout_gravity="center"/>
 
-        <ImageButton
+        <ImageView
+                android:id="@+id/image_button_change_layout"
                 android:layout_width="wrap_content"
                 android:contentDescription="@string/list_layout_icon"
                 android:layout_height="wrap_content"

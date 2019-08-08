@@ -6,10 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.malursilva.pokedexapp.R
 import com.github.malursilva.pokedexapp.main.adapter.RecyclerAdapter
 import com.github.malursilva.pokedexapp.main.pokemonDetails.PokemonDetailsActivity
-import com.github.malursilva.pokedexapp.shared.events.GlobalBus
 import com.github.malursilva.pokedexapp.shared.model.Pokemon
 import kotlinx.android.synthetic.main.fragment_pokemon_favorite_list.view.*
 
@@ -38,11 +39,15 @@ class PokemonFavoriteListFragment : Fragment(), PokemonFavoriteListContract.View
         adapter.onItemClick = { pokemon ->
             launchPokemonDetailsScreen(pokemon.name)
         }
+        adapter.onFavoriteItemClick = {pokemon ->
+            presenter.onFavoriteOptionSelected(pokemon)
+        }
         view!!.pokemon_favorite_list_recycler_view.adapter = adapter
     }
 
     override fun updateAdapterList(favoriteList: List<Pokemon>) {
         adapter.updateList(favoriteList)
+        adapter.notifyDataSetChanged()
     }
 
     override fun launchPokemonDetailsScreen(pokemonName: String) {
@@ -51,9 +56,13 @@ class PokemonFavoriteListFragment : Fragment(), PokemonFavoriteListContract.View
         startActivity(intent)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        GlobalBus.getBus().unregister(this)
+    override fun changeLayoutManager(layoutOption: Int) {
+        if (layoutOption == 0) {
+            view!!.pokemon_favorite_list_recycler_view.layoutManager = GridLayoutManager(context, 2)
+            // ver como mudar o layout do View Holder
+        } else {
+            view!!.pokemon_favorite_list_recycler_view.layoutManager = LinearLayoutManager(context)
+            // talvez dê para mudar o layout do viewholder criando uma função no adapter
+        }
     }
-
 }

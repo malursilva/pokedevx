@@ -55,15 +55,14 @@ class RecyclerAdapter(private var list: List<Pokemon>)
             }
             pokemon_number.text = resources.getString(R.string.pokemon_number_pattern, pokemon.id)
             Picasso.get().load(String.format(DEFAULT_IMAGE, pokemon.id)).into(pokemon_image)
-            showFavIcon(pokemon.favorite)
+            itemView.favorite_icon.setImageResource(showFavIcon(pokemon.favorite))
         }
 
-        fun showFavIcon(favorite: Boolean) {
+        fun showFavIcon(favorite: Boolean): Int{
             if (favorite) {
-
-            } else {
-
+                return R.drawable.ic_favorite_filled
             }
+            return R.drawable.ic_favorite_border
         }
     }
 }

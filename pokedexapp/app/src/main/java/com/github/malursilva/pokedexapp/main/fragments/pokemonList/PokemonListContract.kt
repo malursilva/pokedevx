@@ -8,11 +8,15 @@ interface PokemonListContract {
         fun showPokemons(list: List<Pokemon>)
         fun showLoading()
         fun dismissLoading()
+        fun updateView(list: List<Pokemon>)
         fun showErrorTryAgain()
         fun launchPokemonDetailsScreen(pokemonName: String)
+        fun changeLayoutManager(layoutOption: Int)
     }
     interface Presenter {
         fun initialize()
+        fun initializeObservers()
         fun onFavoriteOptionSelected(pokemon: Pokemon)
+        fun updateList(pokemon: Pokemon)
     }
 }

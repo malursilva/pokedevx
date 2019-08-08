@@ -7,15 +7,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.github.malursilva.pokedexapp.R
 import com.github.malursilva.pokedexapp.main.adapter.RecyclerAdapter
 import com.github.malursilva.pokedexapp.main.pokemonDetails.PokemonDetailsActivity
-import com.github.malursilva.pokedexapp.shared.events.GlobalBus
 import com.github.malursilva.pokedexapp.shared.model.Pokemon
 import kotlinx.android.synthetic.main.fragment_pokemon_list.view.*
 
 class PokemonListFragment : Fragment(), PokemonListContract.View {
     override lateinit var presenter: PokemonListContract.Presenter
+    lateinit var adapter: RecyclerAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_pokemon_list, null)
@@ -29,15 +32,19 @@ class PokemonListFragment : Fragment(), PokemonListContract.View {
     }
 
     override fun showPokemons(list: List<Pokemon>) {
-        val adapter = RecyclerAdapter(list)
+        adapter = RecyclerAdapter(list)
         adapter.onItemClick = { pokemon ->
             launchPokemonDetailsScreen(pokemon.name)
         }
         adapter.onFavoriteItemClick = { pokemon ->
-            Log.d("TAG", "Selecionou o " + pokemon.name)
             presenter.onFavoriteOptionSelected(pokemon)
         }
         view!!.pokemon_list_recycler_view.adapter = adapter
+    }
+
+    override fun updateView(list: List<Pokemon>) {
+        adapter.updateList(list)
+        adapter.notifyDataSetChanged()
     }
 
     override fun showLoading() {
@@ -57,8 +64,14 @@ class PokemonListFragment : Fragment(), PokemonListContract.View {
         startActivity(intent)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        GlobalBus.getBus().unregister(this)
+    override fun changeLayoutManager(layoutOption: Int) {
+        if (layoutOption == 0) {
+            view!!.pokemon_list_recycler_view.layoutManager = GridLayoutManager(context, 2)
+            // ver como mudar o layout do View Holder
+        } else {
+            view!!.pokemon_list_recycler_view.layoutManager = LinearLayoutManager(context)
+            // talvez dê para mudar o layout do viewholder criando uma função no adapter
+        }
     }
+
 }
