@@ -21,7 +21,9 @@
                 android:layout_width="124dp"
                 android:layout_height="45dp"
                 android:contentDescription="@string/pokemon_logo_banner"
-                android:background="@android:color/holo_orange_light"
+                android:src="@drawable/pokemon-logo"
+                android:scaleType="centerInside"
+                android:adjustViewBounds="true"
                 android:layout_gravity="center"/>
 
         <ImageView
