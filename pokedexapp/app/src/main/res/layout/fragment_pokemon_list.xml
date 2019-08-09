@@ -21,8 +21,6 @@
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/pokemon_list_recycler_view"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:spanCount="2"
             android:layout_gravity="center_horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

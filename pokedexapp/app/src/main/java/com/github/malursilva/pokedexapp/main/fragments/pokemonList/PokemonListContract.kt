@@ -10,13 +10,15 @@ interface PokemonListContract {
         fun dismissLoading()
         fun updateView(list: List<Pokemon>)
         fun showErrorTryAgain()
-        fun launchPokemonDetailsScreen(pokemonName: String)
-        fun changeLayoutManager(layoutOption: Int)
+        fun launchPokemonDetailsScreen(pokemon: Pokemon)
+        fun changeLayoutManager(gridLayoutOption: Boolean)
     }
+
     interface Presenter {
         fun initialize()
         fun initializeObservers()
         fun onFavoriteOptionSelected(pokemon: Pokemon)
         fun updateList(pokemon: Pokemon)
+        fun loadFavoritesFromDB()
     }
 }

@@ -13,7 +13,6 @@ class PokemonDBPresenter : PokemonDBContract.Presenter {
             }
             return true
         } catch (e: Exception) {
-            // Inserir mensagem de erro
             return false
         }
     }
@@ -27,7 +26,6 @@ class PokemonDBPresenter : PokemonDBContract.Presenter {
             }
             return true
         } catch (e: Exception) {
-            // Inserir mensagem de erro
             return false
         }
     }

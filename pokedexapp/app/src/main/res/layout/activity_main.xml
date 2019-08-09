@@ -21,7 +21,7 @@
                 android:layout_width="124dp"
                 android:layout_height="45dp"
                 android:contentDescription="@string/pokemon_logo_banner"
-                android:src="@drawable/pokemon-logo"
+                android:src="@drawable/pokemon_logo"
                 android:scaleType="centerInside"
                 android:adjustViewBounds="true"
                 android:layout_gravity="center"/>
@@ -59,8 +59,8 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:background="@color/colorPrimary"
-            app:itemIconTint="@color/colorNavIcon"
-            app:itemTextColor="@color/colorNavText"
+            app:itemIconTint="@drawable/toolbar_color_selector"
+            app:itemTextColor="@drawable/toolbar_color_selector"
             app:menu="@menu/navigation"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>

@@ -3,7 +3,7 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 class Pokemon : Serializable {
-    var id: Int?
+    var id: Int = 0
     val name: String
     val sprites: PokemonSprites?
     val types: Array<PokemonType>?
@@ -14,7 +14,7 @@ class Pokemon : Serializable {
     val url: String?
     var favorite: Boolean = false
 
-    constructor(id: Int?, name: String, sprites: PokemonSprites?, types: Array<PokemonType>?,
+    constructor(id: Int, name: String, sprites: PokemonSprites?, types: Array<PokemonType>?,
                 experience: Int?, height: Double?, rarity: Int?, url: String?, favorite: Boolean) {
         this.id = id
         this.name = name

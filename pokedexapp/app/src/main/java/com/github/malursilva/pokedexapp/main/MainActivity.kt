@@ -11,8 +11,13 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 
 class MainActivity : AppCompatActivity(), MainContract.View {
+    companion object {
+        private const val LIST_VIEW_TYPE = 1
+        private const val GRID_VIEW_TYPE = 2
+    }
+
     override lateinit var presenter: MainContract.Presenter
-    private var layoutOption: Int = 0
+    private var gridLayoutOption: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,13 +65,12 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     override fun onLayoutChange(view: View) {
-        presenter.onLayoutChange(layoutOption)
-        if(layoutOption == 0) {
-            view.image_button_change_layout.setImageResource(R.drawable.ic_view_list)
-            layoutOption = 1
-        } else {
+        presenter.onLayoutChange(gridLayoutOption)
+        if(gridLayoutOption) {
             view.image_button_change_layout.setImageResource(R.drawable.ic_view_grid)
-            layoutOption = 0
+        } else {
+            view.image_button_change_layout.setImageResource(R.drawable.ic_view_list)
         }
+        gridLayoutOption = !gridLayoutOption
     }
 }

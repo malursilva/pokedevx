@@ -7,10 +7,15 @@ interface PokemonDetailsContract {
     interface View: BaseView<Presenter> {
         fun showDetailsInfo(pokemon: Pokemon)
         fun setupActionBar()
+        fun showLoading()
+        fun dismissLoading()
+        fun showErrorTryAgain()
+        fun showFavoriteIcon(favorite: Boolean)
     }
 
     interface Presenter {
-        fun loadPokemonDetails(name: String)
+        fun loadPokemonDetails(pokemon: Pokemon)
+        fun onFavoriteOptionSelected(pokemon: Pokemon)
     }
 
 }

@@ -26,20 +26,22 @@ class PokemonFavoriteListPresenter(private val view: PokemonFavoriteListContract
         view.showFavoritePokemons(list)
     }
 
+    override fun onFavoriteOptionSelected(pokemon: Pokemon) {
+        if (pokemon.favorite) {
+            RxEventBus.post(Events.PokemonDesfavorited(pokemon))
+            removePokemon(pokemon)
+        }
+    }
+
     override fun update() {
         list.clear()
         val results = pokemonDBAcess.listPokemons(realm)
         results.forEach {
-            list.add(Pokemon(it.id, it.name, null, null, null, null, null, null, true))
+            val pokemon = Pokemon(it.id, it.name, null, null, null, null, null, null, true)
+            list.add(pokemon)
+            RxEventBus.post(Events.PokemonFavoriteLoaded(pokemon))
         }
         view.updateAdapterList(list.sortedWith(compareBy({ it.id })))
-    }
-
-    override fun onFavoriteOptionSelected(pokemon: Pokemon) {
-        if(pokemon.favorite) {
-            RxEventBus.post(Events.PokemonDesfavorited(pokemon))
-            removePokemon(pokemon)
-        }
     }
 
     override fun addPokemon(pokemon: Pokemon) {
@@ -56,18 +58,21 @@ class PokemonFavoriteListPresenter(private val view: PokemonFavoriteListContract
         favoritedObservable
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .onErrorResumeNext(Observable.empty())
             .subscribe {
                 addPokemon(it.getPokemonFavorited())
             }
         desfavoritedObservable
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .onErrorResumeNext(Observable.empty())
             .subscribe {
                 removePokemon(it.getPokemonDesfavorited())
             }
         layoutChangeObservable
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .onErrorResumeNext(Observable.empty())
             .subscribe {
                 view.changeLayoutManager(it.getLayoutManager())
             }

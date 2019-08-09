@@ -2,6 +2,7 @@ package com.github.malursilva.pokedexapp.shared.config
 
 import com.github.malursilva.pokedexapp.shared.model.APIResult
 import com.github.malursilva.pokedexapp.shared.model.Pokemon
+import com.github.malursilva.pokedexapp.shared.model.PokemonColor
 import com.github.malursilva.pokedexapp.shared.util.PokemonWebService
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -44,5 +45,9 @@ class RetrofitConfig {
 
     fun loadPokemonData(name: String): Observable<Pokemon> {
         return service.loadPokemonDetails(name)
+    }
+
+    fun loadColor(color: String): Observable<PokemonColor> {
+        return service.loadColor(color)
     }
 }

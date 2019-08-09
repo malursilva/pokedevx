@@ -27,6 +27,7 @@ class PokemonFavoriteListFragment : Fragment(), PokemonFavoriteListContract.View
         presenter = PokemonFavoriteListPresenter(this).apply {
             initialize()
         }
+        view.pokemon_favorite_list_recycler_view.layoutManager = LinearLayoutManager(context)
     }
 
     override fun onResume() {
@@ -37,9 +38,9 @@ class PokemonFavoriteListFragment : Fragment(), PokemonFavoriteListContract.View
     override fun showFavoritePokemons(favoriteList: List<Pokemon>) {
         adapter = RecyclerAdapter(favoriteList)
         adapter.onItemClick = { pokemon ->
-            launchPokemonDetailsScreen(pokemon.name)
+            launchPokemonDetailsScreen(pokemon)
         }
-        adapter.onFavoriteItemClick = {pokemon ->
+        adapter.onFavoriteItemClick = { pokemon ->
             presenter.onFavoriteOptionSelected(pokemon)
         }
         view!!.pokemon_favorite_list_recycler_view.adapter = adapter
@@ -50,19 +51,18 @@ class PokemonFavoriteListFragment : Fragment(), PokemonFavoriteListContract.View
         adapter.notifyDataSetChanged()
     }
 
-    override fun launchPokemonDetailsScreen(pokemonName: String) {
+    override fun launchPokemonDetailsScreen(pokemon: Pokemon) {
         val intent = Intent(context, PokemonDetailsActivity::class.java)
-        intent.putExtra("pokemon", pokemonName)
+        intent.putExtra("pokemon", pokemon)
         startActivity(intent)
     }
 
-    override fun changeLayoutManager(layoutOption: Int) {
-        if (layoutOption == 0) {
-            view!!.pokemon_favorite_list_recycler_view.layoutManager = GridLayoutManager(context, 2)
-            // ver como mudar o layout do View Holder
-        } else {
+    override fun changeLayoutManager(gridLayoutOption: Boolean) {
+        if (gridLayoutOption) {
             view!!.pokemon_favorite_list_recycler_view.layoutManager = LinearLayoutManager(context)
-            // talvez dê para mudar o layout do viewholder criando uma função no adapter
+        } else {
+            view!!.pokemon_favorite_list_recycler_view.layoutManager = GridLayoutManager(context, 2)
         }
+        adapter.changeLayoutOption(!gridLayoutOption)
     }
 }

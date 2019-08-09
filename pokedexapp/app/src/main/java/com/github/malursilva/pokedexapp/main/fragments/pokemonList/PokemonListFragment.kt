@@ -2,14 +2,13 @@ package com.github.malursilva.pokedexapp.main.fragments.pokemonList
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.github.malursilva.pokedexapp.R
 import com.github.malursilva.pokedexapp.main.adapter.RecyclerAdapter
 import com.github.malursilva.pokedexapp.main.pokemonDetails.PokemonDetailsActivity
@@ -29,16 +28,19 @@ class PokemonListFragment : Fragment(), PokemonListContract.View {
         presenter = PokemonListPresenter(this).apply {
             initialize()
         }
+        view.pokemon_list_recycler_view.layoutManager = LinearLayoutManager(context)
     }
 
     override fun showPokemons(list: List<Pokemon>) {
         adapter = RecyclerAdapter(list)
-        adapter.onItemClick = { pokemon ->
-            launchPokemonDetailsScreen(pokemon.name)
-        }
-        adapter.onFavoriteItemClick = { pokemon ->
-            presenter.onFavoriteOptionSelected(pokemon)
-        }
+            .apply {
+                onItemClick = { pokemon ->
+                    launchPokemonDetailsScreen(pokemon)
+                }
+                onFavoriteItemClick = { pokemon ->
+                    presenter.onFavoriteOptionSelected(pokemon)
+                }
+            }
         view!!.pokemon_list_recycler_view.adapter = adapter
     }
 
@@ -56,22 +58,22 @@ class PokemonListFragment : Fragment(), PokemonListContract.View {
     }
 
     override fun showErrorTryAgain() {
+        Toast.makeText(context, "Error on loading pokémons/nTry again later", Toast.LENGTH_SHORT).show()
     }
 
-    override fun launchPokemonDetailsScreen(pokemonName: String) {
+    override fun launchPokemonDetailsScreen(pokemon: Pokemon) {
         val intent = Intent(context, PokemonDetailsActivity::class.java)
-        intent.putExtra("pokemon", pokemonName)
+        intent.putExtra("pokemon", pokemon)
         startActivity(intent)
     }
 
-    override fun changeLayoutManager(layoutOption: Int) {
-        if (layoutOption == 0) {
-            view!!.pokemon_list_recycler_view.layoutManager = GridLayoutManager(context, 2)
-            // ver como mudar o layout do View Holder
-        } else {
+    override fun changeLayoutManager(gridLayoutOption: Boolean) {
+        if (gridLayoutOption) {
             view!!.pokemon_list_recycler_view.layoutManager = LinearLayoutManager(context)
-            // talvez dê para mudar o layout do viewholder criando uma função no adapter
+        } else {
+            view!!.pokemon_list_recycler_view.layoutManager = GridLayoutManager(context, 2)
         }
+        adapter.changeLayoutOption(gridLayoutOption)
     }
 
 }

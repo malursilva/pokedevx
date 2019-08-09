@@ -1,6 +1,5 @@
 package com.github.malursilva.pokedexapp.main
 
-import android.view.View
 import com.github.malursilva.pokedexapp.shared.arch.BaseView
 
 interface MainContract {
@@ -11,6 +10,6 @@ interface MainContract {
     }
 
     interface Presenter {
-        fun onLayoutChange(layoutOption: Int)
+        fun onLayoutChange(gridLayoutOption: Boolean)
     }
 }

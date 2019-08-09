@@ -1,7 +1,5 @@
 package com.github.malursilva.pokedexapp.shared.events
 
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.github.malursilva.pokedexapp.shared.model.Pokemon
 
 class Events {
@@ -29,13 +27,22 @@ class Events {
     }
 
     class LayoutChange {
-        private var layoutOption: Int
-        constructor(layoutOption: Int){
-            this.layoutOption = layoutOption
+        private var gridLayoutOption: Boolean
+        constructor(layoutOption: Boolean){
+            this.gridLayoutOption = layoutOption
         }
-        fun getLayoutManager(): Int {
-            return layoutOption
+        fun getLayoutManager(): Boolean {
+            return gridLayoutOption
         }
     }
 
+    class PokemonFavoriteLoaded {
+        private var pokemonFavorite: Pokemon
+        constructor(pokemonFavorite: Pokemon) {
+            this.pokemonFavorite = pokemonFavorite
+        }
+        fun getPokemonFavoriteLoaded(): Pokemon {
+            return pokemonFavorite
+        }
+    }
 }

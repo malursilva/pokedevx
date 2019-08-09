@@ -3,8 +3,6 @@
     <color name="colorPrimary">#EE3D2E</color>
     <color name="colorPrimaryDark">#DB0C2C</color>
     <color name="colorAccent">#4075a2</color>
-    <color name="colorNavIcon">#dae9f6</color>
-    <color name="colorNavText">#01294b</color>
     <color name="colorItemTextDark">#424242</color>
     <color name="colorItemTextLight">#757575</color>
     <color name="colorBackgroundImage">#DDDDDD</color>

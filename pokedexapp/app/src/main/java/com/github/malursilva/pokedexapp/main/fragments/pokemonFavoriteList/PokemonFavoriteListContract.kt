@@ -7,9 +7,9 @@ import com.github.malursilva.pokedexapp.shared.model.Pokemon
 interface PokemonFavoriteListContract {
     interface View : BaseView<Presenter> {
         fun showFavoritePokemons(favoriteList: List<Pokemon>)
-        fun launchPokemonDetailsScreen(pokemonName: String)
+        fun launchPokemonDetailsScreen(pokemon: Pokemon)
         fun updateAdapterList(favoriteList: List<Pokemon>)
-        fun changeLayoutManager(layoutOption: Int)
+        fun changeLayoutManager(gridLayoutOption: Boolean)
     }
 
     interface Presenter {
