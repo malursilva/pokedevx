@@ -1,5 +1,6 @@
 package com.github.malursilva.pokedexapp.main.fragments.pokemonList
 
+import android.content.Context
 import android.util.Log
 import com.github.malursilva.pokedexapp.shared.config.RetrofitConfig
 import com.github.malursilva.pokedexapp.shared.events.Events
@@ -10,11 +11,13 @@ import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 
-class PokemonListPresenter(private val view: PokemonListContract.View) : PokemonListContract.Presenter {
+class PokemonListPresenter(
+    private val view: PokemonListContract.View,
+    context: Context?
+) : PokemonListContract.Presenter {
     private var list: ArrayList<Pokemon> = ArrayList()
     private var listFavs: ArrayList<Pokemon> = ArrayList()
-    private val listColors: ArrayList<PokemonColor> = ArrayList()
-    private val api = RetrofitConfig()
+    private val api = RetrofitConfig(context)
     var favoriteLoaded: Observable<Events.PokemonFavoriteLoaded> = RxEventBus.subscribe()
     var favoritedObservable: Observable<Events.PokemonFavorited> = RxEventBus.subscribe()
     var desfavoritedObservable: Observable<Events.PokemonDesfavorited> = RxEventBus.subscribe()

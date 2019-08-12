@@ -37,7 +37,7 @@ class PokemonFavoriteListPresenter(private val view: PokemonFavoriteListContract
         list.clear()
         val results = pokemonDBAcess.listPokemons(realm)
         results.forEach {
-            val pokemon = Pokemon(it.id, it.name, null, null, null, null, null, null, true)
+            val pokemon = Pokemon(it.id, it.name, null, null, null, null, null,  true)
             list.add(pokemon)
             RxEventBus.post(Events.PokemonFavoriteLoaded(pokemon))
         }

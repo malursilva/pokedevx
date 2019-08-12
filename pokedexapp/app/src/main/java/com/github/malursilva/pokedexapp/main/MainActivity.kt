@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     override lateinit var presenter: MainContract.Presenter
-    private var gridLayoutOption: Boolean = false
+    private var layoutOption: Int = LIST_VIEW_TYPE
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,12 +65,16 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     override fun onLayoutChange(view: View) {
-        presenter.onLayoutChange(gridLayoutOption)
-        if(gridLayoutOption) {
-            view.image_button_change_layout.setImageResource(R.drawable.ic_view_grid)
-        } else {
-            view.image_button_change_layout.setImageResource(R.drawable.ic_view_list)
+        when(layoutOption) {
+            LIST_VIEW_TYPE -> {
+                image_button_change_layout.setImageResource(R.drawable.ic_view_list)
+                layoutOption = GRID_VIEW_TYPE
+            }
+            GRID_VIEW_TYPE -> {
+                image_button_change_layout.setImageResource(R.drawable.ic_view_grid)
+                layoutOption = LIST_VIEW_TYPE
+            }
         }
-        gridLayoutOption = !gridLayoutOption
+        presenter.onLayoutChange(layoutOption)
     }
 }

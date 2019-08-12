@@ -10,6 +10,6 @@ interface MainContract {
     }
 
     interface Presenter {
-        fun onLayoutChange(gridLayoutOption: Boolean)
+        fun onLayoutChange(layoutOption: Int)
     }
 }

@@ -1,10 +1,11 @@
 package com.github.malursilva.pokedexapp.shared.config
 
+import android.content.Context
 import com.github.malursilva.pokedexapp.shared.model.APIResult
 import com.github.malursilva.pokedexapp.shared.model.Pokemon
-import com.github.malursilva.pokedexapp.shared.model.PokemonColor
 import com.github.malursilva.pokedexapp.shared.util.PokemonWebService
 import com.google.gson.GsonBuilder
+import com.readystatesoftware.chuck.ChuckInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -13,16 +14,13 @@ import retrofit2.converter.gson.GsonConverterFactory
 import rx.Observable
 import java.util.concurrent.TimeUnit
 
-class RetrofitConfig {
+class RetrofitConfig (val context: Context?){
     private val retrofit: Retrofit
     private val service: PokemonWebService
 
     init {
-        val logging = HttpLoggingInterceptor()
-        logging.level = HttpLoggingInterceptor.Level.BODY
-
         val httpClient = OkHttpClient.Builder()
-        httpClient.addInterceptor(logging)
+        httpClient.addInterceptor(ChuckInterceptor(context))
             .connectTimeout(60, TimeUnit.SECONDS)
             .readTimeout(60, TimeUnit.SECONDS)
             .build()
@@ -45,9 +43,5 @@ class RetrofitConfig {
 
     fun loadPokemonData(name: String): Observable<Pokemon> {
         return service.loadPokemonDetails(name)
-    }
-
-    fun loadColor(color: String): Observable<PokemonColor> {
-        return service.loadColor(color)
     }
 }

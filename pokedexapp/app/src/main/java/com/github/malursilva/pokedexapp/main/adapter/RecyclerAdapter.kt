@@ -9,7 +9,11 @@ import com.github.malursilva.pokedexapp.shared.model.Pokemon
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.holder_pokemon_list.view.*
 
-class RecyclerAdapter(private var list: List<Pokemon>) : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
+class RecyclerAdapter(
+    private var list: List<Pokemon>,
+    val onItemClick: ((Pokemon) -> Unit)?,
+    val onFavoriteItemClick: ((Pokemon) -> Unit)?
+) : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
     companion object {
         private const val DEFAULT_IMAGE =
@@ -18,19 +22,33 @@ class RecyclerAdapter(private var list: List<Pokemon>) : RecyclerView.Adapter<Re
         private const val GRID_VIEW_TYPE = 2
     }
 
-    var onItemClick: ((Pokemon) -> Unit)? = null
-    var onFavoriteItemClick: ((Pokemon) -> Unit)? = null
-    var gridLayoutOption: Boolean = false
     private var currentViewType = LIST_VIEW_TYPE
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-//        if (gridLayoutOption) {
-//            return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.holder_pokemon_card, parent, false))
-//        }
-        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.holder_pokemon_list, parent, false))
+        return when (currentViewType) {
+            LIST_VIEW_TYPE -> ViewHolder(
+                LayoutInflater.from(parent.context).inflate(
+                    R.layout.holder_pokemon_list,
+                    parent,
+                    false
+                )
+            )
+            GRID_VIEW_TYPE -> ViewHolder(
+                LayoutInflater.from(parent.context).inflate(
+                    R.layout.holder_pokemon_card,
+                    parent,
+                    false
+                )
+            )
+            else -> throw Exception("Invalid view type")
+        }
     }
 
     override fun getItemCount(): Int = list.size
+
+    override fun getItemViewType(position: Int): Int {
+        return currentViewType
+    }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(list[position])
@@ -41,15 +59,15 @@ class RecyclerAdapter(private var list: List<Pokemon>) : RecyclerView.Adapter<Re
         notifyDataSetChanged()
     }
 
-    fun changeLayoutOption(gridOptionOn: Boolean) {
-        gridLayoutOption = gridOptionOn
+    fun changeLayoutOption(layoutOption: Int) {
+        currentViewType = layoutOption
         notifyDataSetChanged()
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(pokemon: Pokemon) = with(itemView) {
             setOnClickListener {
-                onItemClick?.invoke(list[adapterPosition])
+                onItemClick?.invoke(pokemon)
             }
             pokemon_name.text = pokemon.name.capitalize()
             if (pokemon.id == 0) {
@@ -59,7 +77,7 @@ class RecyclerAdapter(private var list: List<Pokemon>) : RecyclerView.Adapter<Re
             Picasso.get().load(String.format(DEFAULT_IMAGE, pokemon.id)).into(pokemon_image)
             favorite_icon.apply {
                 setOnClickListener {
-                    onFavoriteItemClick?.invoke(list[adapterPosition])
+                    onFavoriteItemClick?.invoke(pokemon)
                 }
                 setImageResource(
                     if (pokemon.favorite) {

@@ -1,5 +1,6 @@
 package com.github.malursilva.pokedexapp.main.pokemonDetails
 
+import android.content.Context
 import com.github.malursilva.pokedexapp.shared.config.RetrofitConfig
 import com.github.malursilva.pokedexapp.shared.events.Events
 import com.github.malursilva.pokedexapp.shared.events.RxEventBus
@@ -7,13 +8,17 @@ import com.github.malursilva.pokedexapp.shared.model.Pokemon
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 
-class PokemonDetailsPresenter(private val view: PokemonDetailsContract.View) : PokemonDetailsContract.Presenter{
-    private val api = RetrofitConfig()
+class PokemonDetailsPresenter(
+    private val view: PokemonDetailsContract.View,
+    context: Context
+) : PokemonDetailsContract.Presenter {
+
+    private val api = RetrofitConfig(context)
 
     override fun loadPokemonDetails(pokemon: Pokemon) {
         api.loadPokemonData(pokemon.name)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe {
                 view.showLoading()
             }
@@ -33,8 +38,7 @@ class PokemonDetailsPresenter(private val view: PokemonDetailsContract.View) : P
         pokemon.favorite = !(pokemon.favorite)
         if (pokemon.favorite) {
             event = Events.PokemonFavorited(pokemon)
-        }
-        else {
+        } else {
             event = Events.PokemonDesfavorited(pokemon)
         }
         RxEventBus.post(event)

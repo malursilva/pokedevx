@@ -6,15 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.malursilva.pokedexapp.R
 import com.github.malursilva.pokedexapp.main.adapter.RecyclerAdapter
 import com.github.malursilva.pokedexapp.main.pokemonDetails.PokemonDetailsActivity
 import com.github.malursilva.pokedexapp.shared.model.Pokemon
-import kotlinx.android.synthetic.main.fragment_pokemon_favorite_list.view.*
+import kotlinx.android.synthetic.main.fragment_pokemon_favorite_list.*
 
 class PokemonFavoriteListFragment : Fragment(), PokemonFavoriteListContract.View {
+    companion object {
+        private const val LIST_VIEW_TYPE = 1
+        private const val GRID_VIEW_TYPE = 2
+    }
+
     override lateinit var presenter: PokemonFavoriteListContract.Presenter
     lateinit var adapter: RecyclerAdapter
 
@@ -27,7 +32,7 @@ class PokemonFavoriteListFragment : Fragment(), PokemonFavoriteListContract.View
         presenter = PokemonFavoriteListPresenter(this).apply {
             initialize()
         }
-        view.pokemon_favorite_list_recycler_view.layoutManager = LinearLayoutManager(context)
+        pokemon_favorite_list_recycler_view.layoutManager = GridLayoutManager(context, 1)
     }
 
     override fun onResume() {
@@ -36,19 +41,21 @@ class PokemonFavoriteListFragment : Fragment(), PokemonFavoriteListContract.View
     }
 
     override fun showFavoritePokemons(favoriteList: List<Pokemon>) {
-        adapter = RecyclerAdapter(favoriteList)
-        adapter.onItemClick = { pokemon ->
-            launchPokemonDetailsScreen(pokemon)
+        pokemon_favorite_list_recycler_view.apply {
+            adapter = RecyclerAdapter(favoriteList,
+                onItemClick = { pokemon -> launchPokemonDetailsScreen(pokemon) },
+                onFavoriteItemClick = { pokemon -> presenter.onFavoriteOptionSelected(pokemon) })
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
-        adapter.onFavoriteItemClick = { pokemon ->
-            presenter.onFavoriteOptionSelected(pokemon)
-        }
-        view!!.pokemon_favorite_list_recycler_view.adapter = adapter
     }
 
     override fun updateAdapterList(favoriteList: List<Pokemon>) {
-        adapter.updateList(favoriteList)
-        adapter.notifyDataSetChanged()
+        pokemon_favorite_list_recycler_view.apply {
+            (adapter as RecyclerAdapter).apply {
+                updateList(favoriteList)
+                notifyDataSetChanged()
+            }
+        }
     }
 
     override fun launchPokemonDetailsScreen(pokemon: Pokemon) {
@@ -57,12 +64,20 @@ class PokemonFavoriteListFragment : Fragment(), PokemonFavoriteListContract.View
         startActivity(intent)
     }
 
-    override fun changeLayoutManager(gridLayoutOption: Boolean) {
-        if (gridLayoutOption) {
-            view!!.pokemon_favorite_list_recycler_view.layoutManager = LinearLayoutManager(context)
-        } else {
-            view!!.pokemon_favorite_list_recycler_view.layoutManager = GridLayoutManager(context, 2)
+    override fun changeLayoutManager(layoutOption: Int) {
+        pokemon_favorite_list_recycler_view.apply {
+            (layoutManager as GridLayoutManager).spanCount = when (layoutOption) {
+                LIST_VIEW_TYPE -> {
+                    addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+                    1
+                }
+                GRID_VIEW_TYPE -> {
+                    removeItemDecoration(getItemDecorationAt(0))
+                    2
+                }
+                else -> throw Exception("Layout error")
+            }
+            (adapter as RecyclerAdapter).changeLayoutOption(layoutOption)
         }
-        adapter.changeLayoutOption(!gridLayoutOption)
     }
 }

@@ -9,7 +9,7 @@ interface PokemonFavoriteListContract {
         fun showFavoritePokemons(favoriteList: List<Pokemon>)
         fun launchPokemonDetailsScreen(pokemon: Pokemon)
         fun updateAdapterList(favoriteList: List<Pokemon>)
-        fun changeLayoutManager(gridLayoutOption: Boolean)
+        fun changeLayoutManager(layoutOption: Int)
     }
 
     interface Presenter {

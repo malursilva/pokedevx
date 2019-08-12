@@ -27,11 +27,11 @@ class Events {
     }
 
     class LayoutChange {
-        private var gridLayoutOption: Boolean
-        constructor(layoutOption: Boolean){
+        private var gridLayoutOption: Int
+        constructor(layoutOption: Int){
             this.gridLayoutOption = layoutOption
         }
-        fun getLayoutManager(): Boolean {
+        fun getLayoutManager(): Int {
             return gridLayoutOption
         }
     }

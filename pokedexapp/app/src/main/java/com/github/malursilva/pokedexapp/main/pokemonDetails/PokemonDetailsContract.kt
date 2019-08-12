@@ -11,6 +11,7 @@ interface PokemonDetailsContract {
         fun dismissLoading()
         fun showErrorTryAgain()
         fun showFavoriteIcon(favorite: Boolean)
+        fun showPokemonImage(sprite: String?)
     }
 
     interface Presenter {

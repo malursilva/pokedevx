@@ -11,7 +11,7 @@ interface PokemonListContract {
         fun updateView(list: List<Pokemon>)
         fun showErrorTryAgain()
         fun launchPokemonDetailsScreen(pokemon: Pokemon)
-        fun changeLayoutManager(gridLayoutOption: Boolean)
+        fun changeLayoutManager(layoutOption: Int)
     }
 
     interface Presenter {

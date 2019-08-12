@@ -3,6 +3,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/pokemon_details_layout"
         android:orientation="vertical"
         android:background="@color/colorBackgroundImage"
         android:layout_width="match_parent"
@@ -17,7 +18,7 @@
             android:id="@+id/toolbar_details">
 
         <ImageButton
-                android:id="@+id/action_back_details_toolbar"
+                android:id="@+id/pokemon_details_toolbar_action_back"
                 android:contentDescription="@string/go_back_icon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
@@ -27,16 +28,17 @@
                 android:tint="@android:color/white"/>
 
         <TextView
-                android:id="@+id/pokemon_details_name"
+                android:id="@+id/pokemon_details_toolbar_name"
                 android:layout_width="224dp"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
+                android:fontFamily="@font/font_roboto"
                 android:layout_marginStart="72dp"
                 android:textSize="28sp"
                 tools:text="Bulbasaur"/>
 
         <ImageButton
-                android:id="@+id/pokemon_details_favorite"
+                android:id="@+id/pokemon_details_toolbar_favorite"
                 android:contentDescription="@string/favorite_icon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
@@ -73,7 +75,7 @@
     <androidx.cardview.widget.CardView
             android:id="@+id/pokemon_details_cardview"
             android:layout_width="328dp"
-            android:layout_height="192dp"
+            android:layout_height="176dp"
             app:cardCornerRadius="10dp"
             android:layout_marginBottom="144dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -87,8 +89,9 @@
             <TextView
                     android:text="@string/number"
                     android:layout_width="88dp"
-                    android:layout_height="16dp"
+                    android:layout_height="wrap_content"
                     android:textSize="16sp"
+                    android:fontFamily="@font/font_roboto"
                     android:includeFontPadding="false"
                     android:textColor="@color/colorItemTextLight"
                     android:id="@+id/pokemon_details_number_title"
@@ -100,8 +103,9 @@
             <TextView
                     android:text="@string/type"
                     android:layout_width="88dp"
-                    android:layout_height="16dp"
+                    android:layout_height="wrap_content"
                     android:textSize="16sp"
+                    android:fontFamily="@font/font_roboto"
                     android:includeFontPadding="false"
                     android:textColor="@color/colorItemTextLight"
                     android:id="@+id/pokemon_details_type_title"
@@ -113,8 +117,9 @@
             <TextView
                     android:text="@string/experience"
                     android:layout_width="88dp"
-                    android:layout_height="16dp"
+                    android:layout_height="wrap_content"
                     android:textSize="16sp"
+                    android:fontFamily="@font/font_roboto"
                     android:includeFontPadding="false"
                     android:textColor="@color/colorItemTextLight"
                     android:id="@+id/pokemon_details_experience_title"
@@ -126,8 +131,9 @@
             <TextView
                     android:text="@string/height"
                     android:layout_width="88dp"
-                    android:layout_height="16dp"
+                    android:layout_height="wrap_content"
                     android:textSize="16sp"
+                    android:fontFamily="@font/font_roboto"
                     android:includeFontPadding="false"
                     android:textColor="@color/colorItemTextLight"
                     android:id="@+id/pokemon_details_height_title"
@@ -137,22 +143,10 @@
                     android:layout_marginStart="24dp"/>
 
             <TextView
-                    android:text="@string/rarity"
-                    android:layout_width="88dp"
-                    android:layout_height="16dp"
-                    android:textSize="16sp"
-                    android:includeFontPadding="false"
-                    android:textColor="@color/colorItemTextLight"
-                    android:id="@+id/pokemon_details_rarity_title"
-                    app:layout_constraintTop_toBottomOf="@id/pokemon_details_height_title"
-                    android:layout_marginTop="16dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="24dp"/>
-
-            <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
+                    android:fontFamily="@font/font_roboto"
                     android:includeFontPadding="false"
                     android:textColor="@color/colorItemTextDark"
                     android:id="@+id/pokemon_details_number"
@@ -165,6 +159,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
+                    android:fontFamily="@font/font_roboto"
                     android:includeFontPadding="false"
                     android:textColor="@color/colorItemTextDark"
                     android:id="@+id/pokemon_details_type"
@@ -177,6 +172,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
+                    android:fontFamily="@font/font_roboto"
                     android:includeFontPadding="false"
                     android:textColor="@color/colorItemTextDark"
                     android:id="@+id/pokemon_details_experience"
@@ -189,6 +185,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
+                    android:fontFamily="@font/font_roboto"
                     android:includeFontPadding="false"
                     android:textColor="@color/colorItemTextDark"
                     android:id="@+id/pokemon_details_height"
@@ -197,17 +194,6 @@
                     android:layout_marginStart="164dp"
                     tools:text="0.7 m"/>
 
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:includeFontPadding="false"
-                    android:textColor="@color/colorItemTextDark"
-                    android:id="@+id/pokemon_details_rarity"
-                    app:layout_constraintTop_toTopOf="@id/pokemon_details_rarity_title"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="164dp"
-                    tools:text="5"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
