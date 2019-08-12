@@ -8,7 +8,7 @@ interface PokemonListContract {
         fun showPokemons(list: List<Pokemon>)
         fun showLoading()
         fun dismissLoading()
-        fun updateView(list: List<Pokemon>)
+        fun updateView(pokemon: Pokemon)
         fun showErrorTryAgain()
         fun launchPokemonDetailsScreen(pokemon: Pokemon)
         fun changeLayoutManager(layoutOption: Int)

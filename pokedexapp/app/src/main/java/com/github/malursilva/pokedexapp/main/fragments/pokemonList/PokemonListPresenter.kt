@@ -87,7 +87,7 @@ class PokemonListPresenter(
 
     override fun updateList(pokemon: Pokemon) {
         list[(pokemon.id - 1)] = pokemon
-        view.updateView(list)
+        view.updateView(pokemon)
     }
 
     override fun loadFavoritesFromDB() {

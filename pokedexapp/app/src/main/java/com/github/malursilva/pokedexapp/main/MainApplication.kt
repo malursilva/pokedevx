@@ -2,6 +2,7 @@ package com.github.malursilva.pokedexapp.main
 
 import android.app.Application
 import android.content.Context
+import com.github.malursilva.pokedexapp.R
 import io.realm.Realm
 import io.realm.RealmConfiguration
 
@@ -16,7 +17,7 @@ class MainApplication : Application() {
 
         Realm.init(this)
         val realmConfig = RealmConfiguration.Builder()
-            .name("favPokemonsDB")
+            .name(getString(R.string.db_filename))
             .schemaVersion(1)
             .deleteRealmIfMigrationNeeded()
             .build()

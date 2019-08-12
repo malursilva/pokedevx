@@ -20,4 +20,5 @@
     <string name="go_back_icon">Left arrow button to go back to previous page</string>
     <string name="pokemon_logo_banner">Pokémon logo banner</string>
     <string name="list_layout_icon">Button to change the layout displayed</string>
+    <string name="db_filename">favPokémonsDB</string>
 </resources>

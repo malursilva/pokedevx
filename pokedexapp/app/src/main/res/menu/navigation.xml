@@ -3,10 +3,12 @@
     <item
             android:id="@+id/navigation_pokemon"
             android:icon="@drawable/ic_pokeball"
-            android:title="@string/pokemon" />
+            android:title="@string/pokemon"
+            android:fontFamily="@font/font_roboto"/>
 
     <item
             android:id="@+id/navigation_favorites"
             android:icon="@drawable/ic_favorite_filled"
-            android:title="@string/favorites" />
+            android:title="@string/favorites"
+            android:fontFamily="@font/font_roboto"/>
 </menu>

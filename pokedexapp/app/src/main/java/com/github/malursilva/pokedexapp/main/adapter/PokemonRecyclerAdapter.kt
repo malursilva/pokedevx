@@ -9,19 +9,17 @@ import com.github.malursilva.pokedexapp.shared.model.Pokemon
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.holder_pokemon_list.view.*
 
-class RecyclerAdapter(
+class PokemonRecyclerAdapter(
     private var list: List<Pokemon>,
     val onItemClick: ((Pokemon) -> Unit)?,
     val onFavoriteItemClick: ((Pokemon) -> Unit)?
-) : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
-
+) : RecyclerView.Adapter<PokemonRecyclerAdapter.ViewHolder>() {
     companion object {
         private const val DEFAULT_IMAGE =
             "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/%d.png"
         private const val LIST_VIEW_TYPE = 1
         private const val GRID_VIEW_TYPE = 2
     }
-
     private var currentViewType = LIST_VIEW_TYPE
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -52,6 +50,10 @@ class RecyclerAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(list[position])
+    }
+
+    fun updatePosition(pokemon: Pokemon) {
+        notifyItemChanged(pokemon.id - 1)
     }
 
     fun updateList(updateList: List<Pokemon>) {

@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import com.github.malursilva.pokedexapp.R
-import com.github.malursilva.pokedexapp.main.adapter.RecyclerAdapter
+import com.github.malursilva.pokedexapp.main.adapter.PokemonRecyclerAdapter
 import com.github.malursilva.pokedexapp.main.pokemonDetails.PokemonDetailsActivity
 import com.github.malursilva.pokedexapp.shared.model.Pokemon
 import kotlinx.android.synthetic.main.fragment_pokemon_favorite_list.*
@@ -19,9 +19,7 @@ class PokemonFavoriteListFragment : Fragment(), PokemonFavoriteListContract.View
         private const val LIST_VIEW_TYPE = 1
         private const val GRID_VIEW_TYPE = 2
     }
-
     override lateinit var presenter: PokemonFavoriteListContract.Presenter
-    lateinit var adapter: RecyclerAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_pokemon_favorite_list, null)
@@ -42,7 +40,7 @@ class PokemonFavoriteListFragment : Fragment(), PokemonFavoriteListContract.View
 
     override fun showFavoritePokemons(favoriteList: List<Pokemon>) {
         pokemon_favorite_list_recycler_view.apply {
-            adapter = RecyclerAdapter(favoriteList,
+            adapter = PokemonRecyclerAdapter(favoriteList,
                 onItemClick = { pokemon -> launchPokemonDetailsScreen(pokemon) },
                 onFavoriteItemClick = { pokemon -> presenter.onFavoriteOptionSelected(pokemon) })
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
@@ -51,7 +49,7 @@ class PokemonFavoriteListFragment : Fragment(), PokemonFavoriteListContract.View
 
     override fun updateAdapterList(favoriteList: List<Pokemon>) {
         pokemon_favorite_list_recycler_view.apply {
-            (adapter as RecyclerAdapter).apply {
+            (adapter as PokemonRecyclerAdapter).apply {
                 updateList(favoriteList)
                 notifyDataSetChanged()
             }
@@ -77,7 +75,7 @@ class PokemonFavoriteListFragment : Fragment(), PokemonFavoriteListContract.View
                 }
                 else -> throw Exception("Layout error")
             }
-            (adapter as RecyclerAdapter).changeLayoutOption(layoutOption)
+            (adapter as PokemonRecyclerAdapter).changeLayoutOption(layoutOption)
         }
     }
 }

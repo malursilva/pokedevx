@@ -14,11 +14,11 @@ class PokemonFavoriteListPresenter(private val view: PokemonFavoriteListContract
     PokemonFavoriteListContract.Presenter {
 
     private lateinit var list: ArrayList<Pokemon>
-    var favoritedObservable: Observable<Events.PokemonFavorited> = RxEventBus.subscribe()
-    var desfavoritedObservable: Observable<Events.PokemonDesfavorited> = RxEventBus.subscribe()
-    var layoutChangeObservable: Observable<Events.LayoutChange> = RxEventBus.subscribe()
-    var pokemonDBAcess: PokemonDBPresenter = PokemonDBPresenter()
-    var realm: Realm = Realm.getDefaultInstance()
+    private val favoritedObservable: Observable<Events.PokemonFavorited> = RxEventBus.subscribe()
+    private val unfavoritedObservable: Observable<Events.PokemonDesfavorited> = RxEventBus.subscribe()
+    private val layoutChangeObservable: Observable<Events.LayoutChange> = RxEventBus.subscribe()
+    private val pokemonDBAccess: PokemonDBPresenter = PokemonDBPresenter()
+    val realm: Realm = Realm.getDefaultInstance()
 
     override fun initialize() {
         list = ArrayList()
@@ -35,9 +35,9 @@ class PokemonFavoriteListPresenter(private val view: PokemonFavoriteListContract
 
     override fun update() {
         list.clear()
-        val results = pokemonDBAcess.listPokemons(realm)
+        val results = pokemonDBAccess.listPokemons(realm)
         results.forEach {
-            val pokemon = Pokemon(it.id, it.name, null, null, null, null, null,  true)
+            val pokemon = Pokemon(it.id, it.name, null, null, null, null, null, true)
             list.add(pokemon)
             RxEventBus.post(Events.PokemonFavoriteLoaded(pokemon))
         }
@@ -45,12 +45,12 @@ class PokemonFavoriteListPresenter(private val view: PokemonFavoriteListContract
     }
 
     override fun addPokemon(pokemon: Pokemon) {
-        pokemonDBAcess.addPokemonDB(realm, PokemonDBModel(pokemon.id, pokemon.name))
+        pokemonDBAccess.addPokemonDB(realm, PokemonDBModel(pokemon.id, pokemon.name))
         update()
     }
 
     override fun removePokemon(pokemon: Pokemon) {
-        pokemonDBAcess.removePokemonDB(realm, pokemon.id)
+        pokemonDBAccess.removePokemonDB(realm, pokemon.id)
         update()
     }
 
@@ -62,7 +62,7 @@ class PokemonFavoriteListPresenter(private val view: PokemonFavoriteListContract
             .subscribe {
                 addPokemon(it.getPokemonFavorited())
             }
-        desfavoritedObservable
+        unfavoritedObservable
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .onErrorResumeNext(Observable.empty())

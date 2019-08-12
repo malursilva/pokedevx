@@ -1,7 +1,6 @@
 package com.github.malursilva.pokedexapp.main.fragments.pokemonFavoriteList
 
 import com.github.malursilva.pokedexapp.shared.arch.BaseView
-import com.github.malursilva.pokedexapp.shared.events.Events
 import com.github.malursilva.pokedexapp.shared.model.Pokemon
 
 interface PokemonFavoriteListContract {

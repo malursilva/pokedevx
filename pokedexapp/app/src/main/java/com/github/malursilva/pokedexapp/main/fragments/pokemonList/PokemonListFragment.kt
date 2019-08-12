@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import com.github.malursilva.pokedexapp.R
-import com.github.malursilva.pokedexapp.main.adapter.RecyclerAdapter
+import com.github.malursilva.pokedexapp.main.adapter.PokemonRecyclerAdapter
 import com.github.malursilva.pokedexapp.main.pokemonDetails.PokemonDetailsActivity
 import com.github.malursilva.pokedexapp.shared.model.Pokemon
 import kotlinx.android.synthetic.main.fragment_pokemon_list.*
@@ -21,9 +21,7 @@ class PokemonListFragment : Fragment(), PokemonListContract.View {
         private const val LIST_VIEW_TYPE = 1
         private const val GRID_VIEW_TYPE = 2
     }
-
     override lateinit var presenter: PokemonListContract.Presenter
-    lateinit var adapter: RecyclerAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_pokemon_list, null)
@@ -39,17 +37,17 @@ class PokemonListFragment : Fragment(), PokemonListContract.View {
 
     override fun showPokemons(list: List<Pokemon>) {
         pokemon_list_recycler_view.apply {
-            adapter = RecyclerAdapter(list,
+            adapter = PokemonRecyclerAdapter(list,
                 onItemClick = { pokemon -> launchPokemonDetailsScreen(pokemon) },
                 onFavoriteItemClick = { pokemon -> presenter.onFavoriteOptionSelected(pokemon) })
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
     }
 
-    override fun updateView(list: List<Pokemon>) {
+    override fun updateView(pokemon: Pokemon) {
         pokemon_list_recycler_view.apply {
-            (adapter as RecyclerAdapter).apply {
-                updateList(list)
+            (adapter as PokemonRecyclerAdapter).apply {
+                updatePosition(pokemon)
                 notifyDataSetChanged()
             }
         }
@@ -64,7 +62,7 @@ class PokemonListFragment : Fragment(), PokemonListContract.View {
     }
 
     override fun showErrorTryAgain() {
-        Toast.makeText(context, "Error on loading pokémons/nTry again later", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "Error on loading pokémons\nTry again later", Toast.LENGTH_SHORT).show()
     }
 
     override fun launchPokemonDetailsScreen(pokemon: Pokemon) {
@@ -86,8 +84,7 @@ class PokemonListFragment : Fragment(), PokemonListContract.View {
                 }
                 else -> throw Exception("Layout error")
             }
-            (adapter as RecyclerAdapter).changeLayoutOption(layoutOption)
+            (adapter as PokemonRecyclerAdapter).changeLayoutOption(layoutOption)
         }
     }
-
 }
